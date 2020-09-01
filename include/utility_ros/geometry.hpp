@@ -4,7 +4,6 @@
 #include "opencv2/opencv.hpp"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
 
 #ifndef M_PI
 #define M_PI = 3.141592653589793238
