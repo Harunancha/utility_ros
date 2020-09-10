@@ -14,7 +14,7 @@ A utility library for ROS
 
 ## USAGE
 
-- git clone https://github.com/Harunancha/utility_ros.git
+- git clone https://github.com/Harunancha/utility_ros.git in your_ws/src
 - catkin_make
 - `#include "utility_ros/***.hpp"` in your .cpp file
 - `find_package (utility_ros)` in your CMakeLists.txt
