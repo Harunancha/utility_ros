@@ -4,11 +4,11 @@
 
 A utility library for ROS
 
-- image_util
-- geometry_util
-- probability_util
+- image_util: utilities about image
+- geometry_util: utilities about geometry
+- probability_util: utilities about probability distributions
 
-- Timer
+- Timer: timer class for measuring the duration of processes
     - ChronoTimer
     - RosTimer
 
