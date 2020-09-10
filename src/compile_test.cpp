@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     double d = geo_u::Distance2d(a, b);
     std::cout << "geo_u::Distance2d: " << d << std::endl;
     // Timer ///////////////////////////
-    Timer timer;
+    ChronoTimer timer;
     timer.start();
     timer.lap("test");
     timer.end();
