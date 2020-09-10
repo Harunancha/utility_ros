@@ -9,6 +9,8 @@ A utility library for ROS
 - probability_util
 
 - Timer
+ * ChronoTimer
+ * RosTimer
 
 ## USAGE
 
