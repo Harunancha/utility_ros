@@ -1,0 +1,28 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/harunancha/catkin_ws/devel/include/**",
+        "/opt/ros/kinetic/include/**",
+        "/home/harunancha/catkin_ws/src/ceres_test/include/**",
+        "/home/harunancha/catkin_ws/src/cognitive-sharing/cs_verification/include/**",
+        "/home/harunancha/catkin_ws/src/denso_cobotta_ros/denso_cobotta_control/include/**",
+        "/home/harunancha/catkin_ws/src/denso_cobotta_ros/denso_cobotta_driver/include/**",
+        "/home/harunancha/catkin_ws/src/denso_cobotta_ros/denso_cobotta_gripper/include/**",
+        "/home/harunancha/catkin_ws/src/denso_cobotta_ros/denso_cobotta_lib/include/**",
+        "/home/harunancha/catkin_ws/src/gtest_sample/include/**",
+        "/home/harunancha/catkin_ws/src/robotics_utility/include/**",
+        "/home/harunancha/catkin_ws/src/cognitive-sharing/subgraph_matching/include/**",
+        "/home/harunancha/catkin_ws/src/cognitive-sharing/test_cognitive_sharing/include/**",
+        "/home/harunancha/catkin_ws/src/cognitive-sharing/tf_estimation/include/**",
+        "/home/harunancha/ros_ws/src/utility_ros/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ]
+}
