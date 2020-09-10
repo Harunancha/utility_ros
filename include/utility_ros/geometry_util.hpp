@@ -17,13 +17,8 @@ TODO:
 #define DEG2RAD(x) ((x)*M_PI / 180)
 #define RAD2DEG(x) ((x)*180 / M_PI)
 
-class Geometry
+namespace geo_u
 {
-private:
-    /* data */
-public:
-    Geometry(){};
-    ~Geometry(){};
     static double Distance2d(cv::Point2d x1, cv::Point2d x2)
     {
         return (std::sqrt((x1.x - x2.x) * (x1.x - x2.x) + (x1.y - x2.y) * (x1.y - x2.y)));
@@ -43,6 +38,6 @@ public:
     {
         return rect.width * rect.height;
     };
-};
+}
 
 #endif
