@@ -1,10 +1,11 @@
 /*
-TODO:    
+TODO:
 */
 
 /* references
-- how to use chrono: http://www.sanko-shoko.net/note.php?id=rnfd
+  how to use chrono: http://www.sanko-shoko.net/note.php?id=rnfd
 */
+
 #ifndef TIMER_H_
 #define TIMER_H_
 

@@ -1,5 +1,7 @@
 #include "utility_ros/geometry_util.hpp"
 #include "utility_ros/image_util.hpp"
+#include "utility_ros/probability_util.hpp"
+
 #include "utility_ros/Timer.hpp"
 #include "utility_ros/PlotLib.hpp"
 
@@ -15,6 +17,8 @@ int main(int argc, char **argv)
     timer.start();
     timer.lap("test");
     timer.end();
+    // pd_u ///////////////////////////
+    
     // PlotLib ///////////////////////////
     PlotLib plot;
 
