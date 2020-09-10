@@ -4,13 +4,13 @@
 
 A utility library for ROS
 
-- image_util
-- geometry_util
-- probability_util
+1. image_util
+1. geometry_util
+1. probability_util
 
-- Timer
- * ChronoTimer
- * RosTimer
+1. Timer
+    1. ChronoTimer
+    1. RosTimer
 
 ## USAGE
 
