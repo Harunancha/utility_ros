@@ -144,7 +144,10 @@ target_link_libraries(compile_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 add_executable(matplotlib_test src/matplotlib_test.cpp)
 add_dependencies(matplotlib_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(matplotlib_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
-# target_include_directories(matplotlib_test PRIVATE ${PYTHON_INCLUDE_DIRS})
+
+add_executable(matplotlib_probability_test src/matplotlib_probability_test.cpp)
+add_dependencies(matplotlib_probability_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(matplotlib_probability_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
 
 #############
 ## Install ##

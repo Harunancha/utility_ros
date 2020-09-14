@@ -5,6 +5,9 @@ TODO:
 #define PROBABILITY_DISTRIBUTION_H_
 
 // #include <vector>
+#include "opencv2/opencv.hpp"
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 
 namespace pd_u
 {
@@ -75,6 +78,11 @@ namespace pd_u
     public:
         NormalDistribution2d(){};
         ~NormalDistribution2d(){};
+        NormalDistribution2d(Mu2d m, Sigma2d s)
+        {
+            mu = m;
+            sigma = s;
+        };
         NormalDistribution2d(std::vector<cv::Point2d> &ps)
         {
             double mu_x, mu_y;
