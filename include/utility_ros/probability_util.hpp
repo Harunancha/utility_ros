@@ -1,9 +1,8 @@
 /*
 TODO: 
 */
-
-#ifndef PROBABILITY_H_
-#define PROBABILITY_H_
+#ifndef PROBABILITY_DISTRIBUTION_H_
+#define PROBABILITY_DISTRIBUTION_H_
 
 // #include <vector>
 

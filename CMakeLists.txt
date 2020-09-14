@@ -112,6 +112,9 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
+find_package(PythonLibs REQUIRED)
+
+
 ###########
 ## Build ##
 ###########
@@ -121,6 +124,7 @@ catkin_package(
 include_directories(
 include
   ${catkin_INCLUDE_DIRS}
+  ${PYTHON_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -132,31 +136,15 @@ target_link_libraries(${PROJECT_NAME}
   ${OpenCV_LIBRARIES}
 )
 
-## Add cmake target dependencies of the library
-## as an example, code may need to be generated before libraries
-## either from message generation or dynamic reconfigure
-# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-## Declare a C++ executable
-## With catkin_make all packages are built within a single CMake context
-## The recommended prefix ensures that target names across packages don't collide
 add_executable(compile_test src/compile_test.cpp)
-
-## Rename C++ executable without prefix
-## The above recommended prefix causes long target names, the following renames the
-## target back to the shorter version for ease of user use
-## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
-# set_target_properties(compile_test PROPERTIES OUTPUT_NAME node PREFIX "")
-
-## Add cmake target dependencies of the executable
-## same as for the library above
 add_dependencies(compile_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(compile_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 
-## Specify libraries to link a library or executable target against
-target_link_libraries(compile_test
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBRARIES}
-)
+add_executable(matplotlib_test src/matplotlib_test.cpp)
+add_dependencies(matplotlib_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(matplotlib_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
+# target_include_directories(matplotlib_test PRIVATE ${PYTHON_INCLUDE_DIRS})
 
 #############
 ## Install ##

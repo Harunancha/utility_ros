@@ -6,7 +6,7 @@ TODO:
 #ifndef GEOMETRY_H_
 #define GEOMETRY_H_
 
-#include "opencv2/opencv.hpp"
+// #include "opencv2/opencv.hpp"
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
