@@ -19,6 +19,18 @@ TODO:
 
 namespace geo_u
 {
+    class Pose2d : public cv::Point2d
+    {
+    public:
+        double theta; //degree
+
+    public:
+        Pose2d(/* args */){};
+        ~Pose2d(){};
+        Pose2d(double tx, double ty, double th): cv::Point2d(tx,ty), theta(th){};
+        Pose2d(cv::Point2d p, double th) : cv::Point2d(p), theta(th){};
+    };
+
     static double Distance2d(cv::Point2d x1, cv::Point2d x2)
     {
         return (std::sqrt((x1.x - x2.x) * (x1.x - x2.x) + (x1.y - x2.y) * (x1.y - x2.y)));

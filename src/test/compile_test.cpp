@@ -21,6 +21,11 @@ int main(int argc, char **argv)
     
     // PlotLib ///////////////////////////
     PlotLib plot;
+    plot.add_point("test", a);
+    plot.add_point("test", b);
+    // plot.draw_point("test", cv::Scalar(0, 255, 0), 1, 1);
+    plot.draw_point("test", "r", 1, 1);
+    plot.show("image");
 
     return 0;
 }

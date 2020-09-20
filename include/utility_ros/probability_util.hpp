@@ -131,6 +131,11 @@ namespace pd_u
             return random_point;
         } 
     };
+
+    static double KL_divergence(pd_u::NormalDistribution1d nd1d1, pd_u::NormalDistribution1d nd1d2)
+    {
+        return log(nd1d2.sigma / nd1d1.sigma) + (nd1d1.sigma * nd1d1.sigma + (nd1d1.mu - nd1d2.mu) * (nd1d1.mu - nd1d2.mu) - nd1d2.sigma * nd1d2.sigma) / (2 * nd1d2.sigma * nd1d2.sigma);
+    };
 }
 
 #endif

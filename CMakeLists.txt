@@ -137,15 +137,15 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 
-add_executable(compile_test src/compile_test.cpp)
+add_executable(compile_test src/test/compile_test.cpp)
 add_dependencies(compile_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(compile_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+target_link_libraries(compile_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
 
-add_executable(matplotlib_test src/matplotlib_test.cpp)
+add_executable(matplotlib_test src/test/matplotlib_test.cpp)
 add_dependencies(matplotlib_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(matplotlib_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
 
-add_executable(matplotlib_probability_test src/matplotlib_probability_test.cpp)
+add_executable(matplotlib_probability_test src/test/matplotlib_probability_test.cpp)
 add_dependencies(matplotlib_probability_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(matplotlib_probability_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
 
