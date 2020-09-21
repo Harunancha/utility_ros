@@ -11,8 +11,8 @@ TODO:
 
 namespace im_u
 {
-    
-} // namespace Image
+
+} // namespace im_u
 
 
 #endif

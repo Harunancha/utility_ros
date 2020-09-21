@@ -52,6 +52,7 @@ namespace pd_u
     {
     public:
         Mu2d(): cv::Point2d(0.,0.){};
+        Mu2d(cv::Point2d p): cv::Point2d(p){};
         Mu2d(double x, double y): cv::Point2d(x, y){};
         ~Mu2d(){};
     };
@@ -136,6 +137,49 @@ namespace pd_u
     {
         return log(nd1d2.sigma / nd1d1.sigma) + (nd1d1.sigma * nd1d1.sigma + (nd1d1.mu - nd1d2.mu) * (nd1d1.mu - nd1d2.mu) - nd1d2.sigma * nd1d2.sigma) / (2 * nd1d2.sigma * nd1d2.sigma);
     };
-}
+
+    static size_t random_sampling_uniform1i(size_t min, size_t max)
+    {
+        std::random_device rd;
+        std::mt19937 mt(rd());
+        std::uniform_real_distribution<> score(min, max);
+        return score(mt);
+    };
+
+    double random_sampling_uniform1d(double min, double max)
+    {
+        std::random_device rd;
+        std::mt19937 mt(rd());
+        std::uniform_real_distribution<double> score(min, max);
+        return score(mt);
+    };
+
+    cv::Point2d random_sampling_uniform2d(cv::Point2d min, cv::Point2d max)
+    {
+        std::random_device rd;
+        std::mt19937 mt(rd());
+        std::uniform_real_distribution<double> score_x(min.x, max.x);
+        std::uniform_real_distribution<double> score_y(min.y, max.y);
+        // std::cout << "random 2d: " << cv::Point2d(score_x(mt), score_y(mt)) << std::endl;
+        return cv::Point2d(score_x(mt), score_y(mt));
+    }
+
+    cv::Point2d add_noise_nd2d(Mu2d mu, Sigma2d sigma)
+    {
+        NormalDistribution2d nd2d(mu, sigma);
+        cv::Point2d p = nd2d.random_sampling();
+        // ROS_INFO("random: mu[%2.2lf, %2.2lf], sigma[%2.2lf, %2.2lf, %2.2lf]: sample: (%2.2lf, %2.2lf)", mu.x, mu.y, sigma.xx, sigma.yy, sigma.xy, p.x, p.y);
+        return p;
+    }
+
+    double add_noise_nd1d(double mu, double sigma)
+    {
+        NormalDistribution1d nd1d(mu, sigma);
+        double p = nd1d.random_sampling();
+        // ROS_INFO("random: mu: %2.2lf, sigma: %2.2lf sample: %2.2lf", mu, sigma, p);
+        return p;
+    }
+
+} // namespace pd_u
 
 #endif
