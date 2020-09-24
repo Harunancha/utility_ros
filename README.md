@@ -23,7 +23,7 @@ A utility library for ROS
 ## TODO
 
 - image_util
-- ~~ probability_util ~~
+- ~~probability_util~~
 - tf_utility
 
 ## REFERENCES
