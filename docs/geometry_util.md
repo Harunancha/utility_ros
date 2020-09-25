@@ -19,10 +19,10 @@
     * cv::Point2d tf_point_to_p(cv::Point2d p)
     原点座標系の点をポーズ座標系に変換
 
-    * Pose2d tf_pose2d_to_o(Pose2d p)
+    * Pose2d tf_pose2d_to_o(Pose2d p) \
     ポーズ座標系の位置・姿勢を原点座標系に変換
 
-    * Pose2d tf_pose2d_to_p(Pose2d p)
+    * Pose2d tf_pose2d_to_p(Pose2d p) \
     原点座標系の位置・姿勢をポーズ座標系に変換
 
 - static double Distance2d(cv::Point2d x1, cv::Point2d x2) \
@@ -36,4 +36,5 @@
 
 - static int RectArea(cv::Rect &rect) \
     長方形面積計算
+
 - 
