@@ -47,6 +47,7 @@ namespace geo_u
         {
             calc_mat();
         };
+
         void calc_mat()
         {
             mat_p2o = (cv::Mat_<double>(3, 3) << cos(DEG2RAD(pose.th)), -sin(DEG2RAD(pose.th)), pose.x, 
@@ -54,18 +55,21 @@ namespace geo_u
             0, 0, 1);
             mat_o2p = mat_p2o.inv();
         };
+
         cv::Point2d tf_point_to_o(cv::Point2d p) //transform point pose to origin
         {
             double x = p.x * mat_p2o.at<double>(0, 0) + p.y * mat_p2o.at<double>(0, 1) + mat_p2o.at<double>(0, 2);
             double y = p.x * mat_p2o.at<double>(1, 0) + p.y * mat_p2o.at<double>(1, 1) + mat_p2o.at<double>(1, 2);
             return cv::Point2d(x, y);
         };
+
         cv::Point2d tf_point_to_p(cv::Point2d p) //transform point origin to pose
         {
             double x = p.x * mat_o2p.at<double>(0, 0) + p.y * mat_o2p.at<double>(0, 1) + mat_o2p.at<double>(0, 2);
             double y = p.x * mat_o2p.at<double>(1, 0) + p.y * mat_o2p.at<double>(1, 1) + mat_o2p.at<double>(1, 2);
             return cv::Point2d(x, y);
         };
+
         Pose2d tf_pose2d_to_o(Pose2d p)
         {
             cv::Point2d local_p = p;
@@ -87,11 +91,6 @@ namespace geo_u
     };
 
     static double Distance2d(cv::Point2d x1, cv::Point2d x2)
-    {
-        return (std::sqrt((x1.x - x2.x) * (x1.x - x2.x) + (x1.y - x2.y) * (x1.y - x2.y)));
-    };
-
-    static double DistancePixel(cv::Point x1, cv::Point x2)
     {
         return (std::sqrt((x1.x - x2.x) * (x1.x - x2.x) + (x1.y - x2.y) * (x1.y - x2.y)));
     };
