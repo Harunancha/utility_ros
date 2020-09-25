@@ -1,5 +1,6 @@
-# geometry_util \
-    幾何計算
+# geometry_util  
+
+幾何計算ユーティリティライブラリ
 
 ## description
 
