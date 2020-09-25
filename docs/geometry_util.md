@@ -1,6 +1,6 @@
-# geometry_util  
+# geometry_util (geo_u::)  
 
-幾何計算ユーティリティライブラリ (geo_u::)
+幾何計算ユーティリティライブラリ
 
 ## description
 
