@@ -16,7 +16,7 @@
     * cv::Point2d tf_point_to_o(cv::Point2d p)  \
     ポーズ座標系の点を原点座標系に変換
     
-    * cv::Point2d tf_point_to_p(cv::Point2d p)
+    * cv::Point2d tf_point_to_p(cv::Point2d p) \
     原点座標系の点をポーズ座標系に変換
 
     * Pose2d tf_pose2d_to_o(Pose2d p) \
