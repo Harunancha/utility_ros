@@ -4,6 +4,7 @@
 
 A utility library for ROS
 
+- general_util: general utilities about type transform, etc
 - image_util: utilities about image
 - geometry_util: utilities about geometry
 - probability_util: utilities about probability distributions
@@ -22,9 +23,25 @@ A utility library for ROS
 
 ## TODO
 
-- image_util
-- ~~probability_util~~
-- tf_utility
+- general_util: 
+    * transform Mat type among Eigen, cv, and tf
+- image_util: 
+    * IoU calculation
+- geometry_util: 
+    * type transform between Pose2d Transform2d and tf (3d)
+- probability_util: 
+    * kalman filtering for nd1d
+    * kalman filtering for nd2d
+- marker_util: 
+    * get transform between 2 agents in different viewpoint
+- tracking_util: 
+    * tracking algorithm combining hungarian algorithm and kalman filtering
+- PlotLib:
+    * plot library using matplotlib-cpp or opencv
+- MovingDot: 
+    * moving sophisticately
+    * limit velocity and acceleration
+- Timer: complete
 
 ## REFERENCES
 
