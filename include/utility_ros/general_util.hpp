@@ -20,6 +20,11 @@ namespace util
     {
         return cv::Point3d(p.x, p.y, 0.);
     }
-}
+
+    cv::Point2d cvp_pow2d(cv::Point2d p)
+    {
+        return cv::Point2d(p.x * p.x, p.y * p.y);
+    }
+} // namespace util
 
 #endif

@@ -109,6 +109,17 @@ namespace geo_u
     {
         return rect.width * rect.height;
     };
+
+    bool is_in(cv::Point2d p, cv::Rect2d rect)
+    {
+        if ((p.x>rect.x && p.x<rect.x+rect.width
+	    	 && p.y>rect.y && p.y<rect.y+rect.height)
+	    	 || (p.x<rect.x && p.x>rect.x+rect.width
+	    	 && p.y<rect.y && p.y>rect.y+rect.height))
+	    	return true;
+	    else
+	    	return false;
+    }
 }
 
 #endif

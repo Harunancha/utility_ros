@@ -6,11 +6,11 @@
     http://leeswijzer.org/R/R-binormal.html
 */
 
-#include <utility_ros/matplotlib-cpp/matplotlibcpp.h>
-#include "utility_ros/probability_util.hpp"
-
 #include <unistd.h>
 
+#include "utility_ros/probability_util.hpp"
+
+#include <utility_ros/matplotlib-cpp/matplotlibcpp.h>
 namespace plt = matplotlibcpp;
 
 int main(int argc, char **argv)
