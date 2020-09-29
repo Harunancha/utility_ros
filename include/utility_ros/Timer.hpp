@@ -1,6 +1,4 @@
-/*
-TODO:
-*/
+/* Timer */
 
 /* references
   how to use chrono: http://www.sanko-shoko.net/note.php?id=rnfd
