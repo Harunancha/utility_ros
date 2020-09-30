@@ -37,7 +37,8 @@ A utility library for ROS
 - tracking_util: 
     * tracking algorithm combining hungarian algorithm and kalman filtering
 - PlotLib:
-    * plot library using matplotlib-cpp or opencv
+    * plot library using matplotlib-cpp
+    * plot library using opencv
 - MovingDot: 
     * moving sophisticately
     * limit velocity and acceleration
