@@ -9,6 +9,8 @@ TODO:
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
+#include <Eigen/Dense>
+
 namespace util
 {
     cv::Point2d cvp_3to2d(cv::Point3d p)

@@ -114,7 +114,6 @@ catkin_package(
 
 find_package(PythonLibs REQUIRED)
 
-
 ###########
 ## Build ##
 ###########
@@ -125,6 +124,7 @@ include_directories(
 include
   ${catkin_INCLUDE_DIRS}
   ${PYTHON_INCLUDE_DIRS}
+  "/usr/include/eigen3"
 )
 
 ## Declare a C++ library
@@ -141,6 +141,7 @@ add_executable(compile_test src/test/compile_test.cpp)
 add_dependencies(compile_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(compile_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
 
+## matplotlib-cpp ##
 add_executable(matplotlib_test src/test/matplotlib_test.cpp)
 add_dependencies(matplotlib_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(matplotlib_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
@@ -148,6 +149,11 @@ target_link_libraries(matplotlib_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${
 add_executable(matplotlib_probability_test src/test/matplotlib_probability_test.cpp)
 add_dependencies(matplotlib_probability_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(matplotlib_probability_test ${catkin_LIBRARIES} ${OpenCV_LIBRARIES} ${PYTHON_LIBRARIES})
+
+## Eigen ##
+add_executable(eigen_test src/test/eigen_test.cpp)
+add_dependencies(eigen_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(eigen_test ${catkin_LIBRARIES})
 
 #############
 ## Install ##
