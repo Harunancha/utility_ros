@@ -19,7 +19,7 @@ A utility library for ROS
 
 ### matplotlib-cpp
 - `git clone https://github.com/lava/matplotlib-cpp.git` in anywhere
-- copy `matplotlibcpp.h` to the "include/utility_ros/matplotlib-cpp/" directory
+- copy "matplotlibcpp.h" to the "include/utility_ros/matplotlib-cpp/" directory
 - `#include <utility_ros/matplotlib-cpp/matplotlibcpp.h>` in .cpp
 ### Eigen
 - `sudo apt-get install libeigen3-dev` in terminal
@@ -28,7 +28,7 @@ A utility library for ROS
 
 ### utility_ros
 
-- git clone https://github.com/Harunancha/utility_ros.git in your_ws/src
+- git clone `https://github.com/Harunancha/utility_ros.git` in your_ws/src
 - catkin_make
 - `#include "utility_ros/***.hpp"` in your .cpp file
 - `find_package (utility_ros)` in your CMakeLists.txt
