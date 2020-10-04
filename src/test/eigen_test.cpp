@@ -1,5 +1,6 @@
 #include <iostream>
 #include <Eigen/Dense>
+
 using namespace std;
 using namespace Eigen;
 
@@ -11,7 +12,5 @@ int main()
    SelfAdjointEigenSolver<Matrix2f> eigensolver(A);
    if (eigensolver.info() != Success) abort();
    cout << "The eigenvalues of A are:\n" << eigensolver.eigenvalues() << endl;
-   cout << "Here's a matrix whose columns are eigenvectors of A \n"
-        << "corresponding to these eigenvalues:\n"
-        << eigensolver.eigenvectors() << endl;
+   cout << "Here's a matrix whose columns are eigenvectors of A \n" << "corresponding to these eigenvalues:\n" << eigensolver.eigenvectors() << endl;
 }
