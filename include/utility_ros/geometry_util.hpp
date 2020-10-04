@@ -37,10 +37,10 @@ namespace geo_u
         Pose2d(const Pose2d& p): cv::Point2d(p), th(p.th){};
     };
 
-    class Transform2d
+    class Transform2d: public Pose2d
     {
     public:
-        Pose2d pose;
+        // Pose2d pose;
     private:
         cv::Mat mat_p2o; //TODO: should be replaced by Eigen matrix?
         cv::Mat mat_o2p;
@@ -48,19 +48,19 @@ namespace geo_u
     public:
         Transform2d(){};
         ~Transform2d(){};
-        Transform2d(double x, double y, double a): pose(x, y, a)
+        Transform2d(double x, double y, double a): Pose2d(x, y, a)
         {
             calc_mat();
         };
-        Transform2d(Pose2d p): pose(p)
+        Transform2d(Pose2d p): Pose2d(p)
         {
             calc_mat();
         };
 
         void calc_mat()
         {
-            mat_p2o = (cv::Mat_<double>(3, 3) << cos(DEG2RAD(pose.th)), -sin(DEG2RAD(pose.th)), pose.x, 
-            sin(DEG2RAD(pose.th)), cos(DEG2RAD(pose.th)), pose.y, 
+            mat_p2o = (cv::Mat_<double>(3, 3) << cos(DEG2RAD(th)), -sin(DEG2RAD(th)), x, 
+            sin(DEG2RAD(th)), cos(DEG2RAD(th)), y, 
             0, 0, 1);
             mat_o2p = mat_p2o.inv();
         };
@@ -83,7 +83,7 @@ namespace geo_u
         {
             cv::Point2d local_p = p;
             cv::Point2d position = tf_point_to_o(local_p);
-            Pose2d tf_pose(position, p.th + pose.th);
+            Pose2d tf_pose(position, p.th + th);
             // cv::Point2d zero(0., 0.), dx(1.,0.);
             // cv::Point2d zero_ = tf_point_to_o(zero);
             // cv::Point2d dx_ = tf_point_to_o(dx_);
@@ -95,7 +95,7 @@ namespace geo_u
         {
             cv::Point2d local_p = p;
             cv::Point2d position = tf_point_to_p(local_p);
-            return Pose2d(position, p.th - pose.th);
+            return Pose2d(position, p.th - th);
         };
     };
 

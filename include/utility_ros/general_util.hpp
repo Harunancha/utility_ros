@@ -15,11 +15,12 @@ TODO:
 
 namespace util
 {
+    // 3D to 2D //
     cv::Point2d cvp_3to2d(cv::Point3d p)
     {
         return cv::Point2d(p.x, p.y);
     }
-
+    // 2D to 3D //
     cv::Point3d cvp_2to3d(cv::Point2d p)
     {
         return cv::Point3d(p.x, p.y, 0.);
@@ -30,6 +31,7 @@ namespace util
         return cv::Point2d(p.x * p.x, p.y * p.y);
     }
 
+    // 3D to 2D //
     void transform_3to2d(tf::Transform &tf3d, geo_u::Pose2d &p2d, std::string axis="x")
     {
         p2d.x = tf3d.getOrigin().getX();
@@ -44,28 +46,36 @@ namespace util
         tf::Vector3 projected = tf3d.getBasis() * unit;
         p2d.th = RAD2DEG(atan2(projected.y(), projected.x()));
     }
-
-    //  //
-    geo_u::Pose2d pose_3to2d(geo_u::Pose3d &p3d, std::string axis="x")
+    geo_u::Pose2d pose_3to2d(geo_u::Pose3d &p3d, std::string axis="x") //TODO: test
     {
         geo_u::Pose2d p2d;
         transform_3to2d(p3d, p2d, axis);
         return p2d;
     }
-
     geo_u::Transform2d tf_3to2d(geo_u::Transform3d &tf3d, std::string axis="x") //TODO: test
     {
         geo_u::Transform2d tf2d;
-        transform_3to2d(tf3d, tf2d.pose, axis);
+        transform_3to2d(tf3d, tf2d, axis);
         tf2d.calc_mat();
         return tf2d;
     }
 
-    geo_u::Transform3d tf_2to3d(geo_u::Transform2d &tf2d) //TODO: test
+    // 2D to 3D //
+    void transform_2to3d(geo_u::Pose2d &p2d, geo_u::Transform3d &tf3d)
+    {
+        tf3d.setOrigin(tf::Vector3(p2d.x, p2d.y, 0.));
+        tf3d.setRotation(tf::createQuaternionFromRPY(0., 0., p2d.th));
+    }
+    geo_u::Pose3d pose_2to3d(geo_u::Pose2d &p2d) //TODO: test
+    {
+        geo_u::Pose3d p3d;
+        transform_2to3d(p2d, p3d);
+        return p3d;
+    };
+    geo_u::Transform3d tf_2to3d(geo_u::Pose2d &p2d) //TODO: test
     {
         geo_u::Transform3d tf3d;
-        tf3d.setOrigin(tf::Vector3(tf2d.pose.x, tf2d.pose.y, 0.));
-        tf3d.setRotation(tf::createQuaternionFromRPY(0., 0., tf2d.pose.th));
+        transform_2to3d(p2d, tf3d);
         return tf3d;
     };
 } // namespace util
