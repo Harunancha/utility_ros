@@ -7,13 +7,24 @@
 A utility library for ROS
 
 - general_util: general utilities about type transform, etc
+
 - image_util: utilities about image
+
 - geometry_util: utilities about geometry
+    - Pose2d
+    - Transform2d
+
 - probability_util: utilities about probability distributions
+    - NormalDistribution1d
+    - NormalDistribution2d
 
 - Timer: timer class for measuring the duration of processes
     - ChronoTimer
     - RosTimer
+
+- PlotLib
+    - CVPlotLib
+    - MatPlotLib
 
 ## USAGE
 

@@ -11,6 +11,8 @@ TODO:
 
 #include <Eigen/Dense>
 
+#include "geometry_util.hpp"
+
 namespace util
 {
     cv::Point2d cvp_3to2d(cv::Point3d p)
@@ -27,6 +29,45 @@ namespace util
     {
         return cv::Point2d(p.x * p.x, p.y * p.y);
     }
+
+    void transform_3to2d(tf::Transform &tf3d, geo_u::Pose2d &p2d, std::string axis="x")
+    {
+        p2d.x = tf3d.getOrigin().getX();
+        p2d.y = tf3d.getOrigin().getY();
+        tf::Vector3 unit;
+        if (axis == "x")
+            unit = tf::Vector3(1, 0, 0);
+        else if (axis == "y")
+            unit = tf::Vector3(0, 1, 0);
+        else if (axis == "z")
+            unit = tf::Vector3(0, 0, 1);
+        tf::Vector3 projected = tf3d.getBasis() * unit;
+        p2d.th = RAD2DEG(atan2(projected.y(), projected.x()));
+    }
+
+    //  //
+    geo_u::Pose2d pose_3to2d(geo_u::Pose3d &p3d, std::string axis="x")
+    {
+        geo_u::Pose2d p2d;
+        transform_3to2d(p3d, p2d, axis);
+        return p2d;
+    }
+
+    geo_u::Transform2d tf_3to2d(geo_u::Transform3d &tf3d, std::string axis="x") //TODO: test
+    {
+        geo_u::Transform2d tf2d;
+        transform_3to2d(tf3d, tf2d.pose, axis);
+        tf2d.calc_mat();
+        return tf2d;
+    }
+
+    geo_u::Transform3d tf_2to3d(geo_u::Transform2d &tf2d) //TODO: test
+    {
+        geo_u::Transform3d tf3d;
+        tf3d.setOrigin(tf::Vector3(tf2d.pose.x, tf2d.pose.y, 0.));
+        tf3d.setRotation(tf::createQuaternionFromRPY(0., 0., tf2d.pose.th));
+        return tf3d;
+    };
 } // namespace util
 
 #endif

@@ -10,6 +10,8 @@ TODO:
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
+#include <tf/tf.h>
+
 #ifndef M_PI
 #define M_PI = 3.141592653589793238
 #endif
@@ -19,6 +21,9 @@ TODO:
 
 namespace geo_u
 {
+    typedef tf::Transform Transform3d;
+    typedef Transform3d Pose3d;
+
     class Pose2d : public cv::Point2d
     {
     public:
@@ -28,21 +33,25 @@ namespace geo_u
         Pose2d(/* args */){};
         ~Pose2d(){};
         Pose2d(double tx, double ty, double a): cv::Point2d(tx,ty), th(a){};
-        Pose2d(cv::Point2d p, double a) : cv::Point2d(p), th(a){};
+        Pose2d(cv::Point2d p, double a): cv::Point2d(p), th(a){};
         Pose2d(const Pose2d& p): cv::Point2d(p), th(p.th){};
     };
 
     class Transform2d
     {
-    private:
+    public:
         Pose2d pose;
+    private:
         cv::Mat mat_p2o; //TODO: should be replaced by Eigen matrix?
         cv::Mat mat_o2p;
 
     public:
         Transform2d(){};
         ~Transform2d(){};
-        Transform2d(double x, double y, double a): pose(x, y, a){};
+        Transform2d(double x, double y, double a): pose(x, y, a)
+        {
+            calc_mat();
+        };
         Transform2d(Pose2d p): pose(p)
         {
             calc_mat();
