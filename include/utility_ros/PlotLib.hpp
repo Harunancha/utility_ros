@@ -11,6 +11,7 @@ TODO:
 #include <opencv2/highgui/highgui.hpp>
 // #include "opencv2/video/tracking.hpp"
 
+#include "utility_ros/general_util.hpp"
 #include "utility_ros/geometry_util.hpp"
 #include "utility_ros/probability_util.hpp"
 
@@ -19,72 +20,119 @@ TODO:
 namespace plt = matplotlibcpp;
 
 
-class pltPoints
-{
-public:
-    std::vector<double> x;
-    std::vector<double> y;
-    pltPoints(){};
-    ~pltPoints(){};
-    pltPoints(cv::Point2d p)
-    {
-        x.clear();y.clear();
-        x.push_back(p.x);
-        y.push_back(p.y);
-    };
-    void add(cv::Point2d p)
-    {
-        x.push_back(p.x);
-        y.push_back(p.y);
-    }
-};
-
 class PlotLib
 {
-private:
-    std::map<std::string, pltPoints> points;
-    // std::map<std::string, std::vector<cv::Point2d>> curve;
-    std::map<std::string, geo_u::Pose2d> pose;
-    // std::map<std::string, std::vector<geo_u::Pose2d>> trajectory;
-    std::map<std::string, std::vector<pd_u::NormalDistribution2d>> nd2ds;
+protected:
+    std::string window_name;
+    std::string time;
+    std::string path;
 
 public:
-    PlotLib(/* args */){};
+    PlotLib(std::string window="debug"){};
     ~PlotLib(){};
 
-    void clear()
-    {
-        plt::clf();
-    };
-    void show(std::string mode="image")
-    {
-        if (mode == "image")
-            plt::show();
-        else if (mode == "animation")
-            plt::pause(0.001);
-    };
-    void add_point(std::string name, cv::Point2d p);
-    bool draw_point(std::string name, std::string color = "k", double size = 2., int thickness = 1);
+    void set_time(){ time = util::get_time_string(); };
+    virtual void save(){};
+    virtual void show(){};
+
+    virtual void draw_point(cv::Point2d p){};
+    virtual void draw_line(cv::Point2d ps, cv::Point2d pe){};
+    virtual void draw_arrow(cv::Point2d ps, cv::Point2d pe){};
+    virtual void draw_pose(geo_u::Pose2d p){};
+    virtual void draw_curve(std::vector<cv::Point2d> &p_set){};
+    virtual void draw_ellipse(pd_u::NormalDistribution2d nd2d){};
 };
 
-void PlotLib::add_point(std::string name, cv::Point2d p)
+class CVPlotLib: public PlotLib
 {
-    if (points.count(name)==0)
-        points.insert(std::make_pair(name, pltPoints(p)));
-    else
-        points[name].add(p);
+private:
+    cv::Mat image;
+
+    cv::Point2d real_center;
+    cv::Point image_center;
+    double real_scale, image_scale, scale_ratio, real_interval, image_interval;
+
+public:
+    CVPlotLib(std::string window = "debug") : PlotLib(window) { set_time(); };
+    ~CVPlotLib(){};
+
+    void set_param(cv::Point2d c, double real_s, double image_s, double real_i)
+    {
+        real_center = c;
+        real_scale = real_s;
+        image_scale = image_s;
+        real_interval = real_i;
+        image_center = cv::Point((int)image_scale / 2, (int)image_scale / 2);
+        scale_ratio = image_scale / real_scale;
+        image_interval = (int)(scale_ratio * real_interval);
+    };
+    void save()
+    {
+        set_time();
+        cv::imwrite(path + window_name + "/" + window_name + "-" + time + ".jpg", image);
+    };
+    void show()
+    {
+        cv::imshow(window_name, image);
+        cv::waitKey(1);
+    };
+
+    void init_image()
+    {
+        image = cv::Mat(image_scale, image_scale, CV_8UC3, cv::Scalar(255, 255, 255));
+        int num = (int)(image_scale / image_interval) + 1;
+        for (int i = 0; i < num; ++i)
+            cv::line(image, cv::Point(0, i * image_interval), cv::Point(image_scale, i * image_interval), cv::Scalar(204, 204, 204));
+        for (int i = 0; i < num; ++i)
+            cv::line(image, cv::Point(i * image_interval, 0), cv::Point(i * image_interval, image_scale), cv::Scalar(204, 204, 204));
+        cv::line(image, cv::Point(0, 0), cv::Point(image_scale, 0), cv::Scalar(0, 0, 0));
+        cv::line(image, cv::Point(0, 0), cv::Point(0, image_scale), cv::Scalar(0, 0, 0));
+        cv::line(image, cv::Point(image_scale, image_scale), cv::Point(image_scale, 0), cv::Scalar(0, 0, 0));
+        cv::line(image, cv::Point(image_scale, image_scale), cv::Point(0, image_scale), cv::Scalar(0, 0, 0));
+        cv::circle(image, image_center, 3, cv::Scalar(0, 0, 0), 1, 8, 0);
+    }
+    cv::Point transform2dtoPix(cv::Point2d &p) //TODO: test
+    {
+        return cv::Point((p.x-real_center.x) * scale_ratio + image_center.x, image_center.y - (p.y-real_center.y) * scale_ratio);
+    }
+    void draw_point(cv::Point2d p, double size=0.1, int thickness=0.05, cv::Scalar color=cv::Scalar(0,0,0));
+    void draw_line(cv::Point2d ps, cv::Point2d pe, double thickness=0.1, cv::Scalar color=cv::Scalar(0,0,0));
+    void draw_arrow(cv::Point2d ps, cv::Point2d pe);
+    void draw_pose(geo_u::Pose2d p);
+    void draw_curve(std::vector<cv::Point2d> &p_set){};
+    void draw_ellipse(pd_u::NormalDistribution2d nd2d);
+};
+
+void CVPlotLib::draw_point(cv::Point2d p, double size, int thickness, cv::Scalar color)
+{
+    cv::Point displayed = transform2dtoPix(p);
+    cv::circle(image, displayed, size*scale_ratio, color, thickness*scale_ratio, 8, 0);
 }
 
-bool PlotLib::draw_point(std::string name, std::string color, double size, int thickness)
+void CVPlotLib::draw_line(cv::Point2d ps, cv::Point2d pe, double thickness, cv::Scalar color)
 {
-    if (points.count(name)==0)
-    {
-        std::cout << "\033[31mError[PlotLib]:  no data named \"" << name << "\" \033[m" <<std::endl;
-        return false;
-    }
-    plt::scatter(points[name].x, points[name].y, size);
-    return true;
+    cv::Point p_s = transform2dtoPix(ps);
+    cv::Point p_e = transform2dtoPix(pe);
+    cv::line(image, p_s, p_e, color, thickness*scale_ratio);
 }
+
+void CVPlotLib::draw_arrow(cv::Point2d ps, cv::Point2d pe)
+{
+    cv::Point p_s = transform2dtoPix(ps);
+    cv::Point p_e = transform2dtoPix(pe);
+    // cv::arrowedLine(image, p_s, p_e, color, thickness*scale_ratio);
+}
+
+void CVPlotLib::draw_pose(geo_u::Pose2d p)
+{
+
+}
+
+void CVPlotLib::draw_ellipse(pd_u::NormalDistribution2d nd2d)
+{
+
+}
+
 
 
 

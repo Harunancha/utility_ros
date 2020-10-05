@@ -20,12 +20,12 @@ int main(int argc, char **argv)
     timer.end();
     
     // PlotLib  20200920    ///////////////////////////
-    PlotLib plot;
-    plot.add_point("test", a);
-    plot.add_point("test", b);
-    // plot.draw_point("test", cv::Scalar(0, 255, 0), 1, 1);
-    plot.draw_point("test", "r", 1, 1);
-    plot.show("image");
+    // PlotLib plot;
+    // plot.add_point("test", a);
+    // plot.add_point("test", b);
+    // // plot.draw_point("test", cv::Scalar(0, 255, 0), 1, 1);
+    // plot.draw_point("test", "r", 1, 1);
+    // plot.show("image");
 
     // utility  20200921    ///////////////////////////
     cv::Point3d a3d = util::cvp_2to3d(a);

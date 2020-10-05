@@ -78,6 +78,25 @@ namespace util
         transform_2to3d(p2d, tf3d);
         return tf3d;
     };
+
+    std::string get_time_string()
+    {
+        time_t t = time(nullptr);
+        const tm* lt = localtime(&t);
+        std::stringstream s;
+        s<<"20";
+        s<<lt->tm_year-100; //100を引くことで20xxのxxの部分になる
+        s<<"-";
+        s<<lt->tm_mon+1; //月を0からカウントしているため
+        s<<"-";
+        s<<lt->tm_mday; //そのまま
+        s<<"-";
+        s<<lt->tm_hour; //そのまま
+        s<<"-";
+        s<<lt->tm_min; //そのまま
+        //result = "2015-5-19-8-30" 
+        return std::string(s.str());
+    }
 } // namespace util
 
 #endif

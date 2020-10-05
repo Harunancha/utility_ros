@@ -10,7 +10,27 @@
 #include <stdio.h>
 #include <chrono>
 
-class ChronoTimer
+class Timer
+{
+protected:
+    std::map<std::string, double> lap_time;
+
+public:
+    Timer(/* args */)
+    {
+        lap_time.clear();
+    };
+    ~Timer(){};
+    virtual void start(){};
+    virtual double lap(std::string process_name = "unknown"){};
+    virtual void pause(){};
+    virtual void restart(){};
+    virtual double total(){};
+    virtual void end(){};
+    virtual std::map<std::string, double> export_log() { return lap_time; };
+};
+
+class ChronoTimer: public Timer
 {
 private:
     std::chrono::system_clock::time_point start_time;
@@ -19,13 +39,9 @@ private:
     std::chrono::system_clock::time_point end_time;
     double total_paused_time;
     double total_duration;
-    std::map<std::string, double> lap_time;
 
 public:
-    ChronoTimer(/* args */): total_paused_time(0.), total_duration(0.)
-    {
-        lap_time.clear();
-    };
+    ChronoTimer(/* args */): total_paused_time(0.), total_duration(0.){};
     ~ChronoTimer(){};
     void start()
     {
@@ -62,15 +78,11 @@ public:
         total_duration = static_cast<double>(std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count() / 1000.0);
         std::cout << "total duration: " << std::round(total()) << " [ms]" << std::endl;
     };
-    std::map<std::string, double> export_log()
-    {
-        return lap_time;
-    };
 };
 
 #include "ros/ros.h"
 
-class RosTimer
+class RosTimer: public Timer
 {
 private:
     ros::Time start_time;
@@ -120,10 +132,6 @@ public:
         end_time = ros::Time::now();
         total_duration = end_time - start_time;
         std::cout << "total duration: " << std::round(total()) << " [ms]" << std::endl;
-    };
-    std::map<std::string, double> export_log()
-    {
-        return lap_time;
     };
 };
 
