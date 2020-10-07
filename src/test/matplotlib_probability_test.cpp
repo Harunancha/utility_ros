@@ -29,18 +29,18 @@ int main(int argc, char **argv)
         y[i] = p.y;
 
         ////for matplotlib animation test
-        plt::clf();
-        plt::scatter(x, y);
-        plt::xlim(-1., 3.);
-        plt::ylim(-1., 3.);
-        plt::pause(0.001);
+        // plt::clf();
+        // plt::scatter(x, y);
+        // plt::xlim(-1., 3.);
+        // plt::ylim(-1., 3.);
+        // plt::pause(0.001);
         ////
     }
  
     ////for nd2d random sampling test
-    // plt::scatter(x, y);
-    // plt::xlim(-4., 4.);
-    // plt::ylim(-4., 4.);
-    // plt::show();
+    plt::scatter(x, y);
+    plt::xlim(-4., 4.);
+    plt::ylim(-4., 4.);
+    plt::show();
     ////
 }
