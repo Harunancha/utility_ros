@@ -16,7 +16,7 @@ namespace plt = matplotlibcpp;
 int main(int argc, char **argv)
 {
     pd_u::Mu2d mu(0., 0.);
-    pd_u::Sigma2d sigma(1., 1., -0.6);
+    pd_u::Sigma2d sigma(1., 0.4, -0.6);
 
     pd_u::NormalDistribution2d nd2d(mu, sigma);
 

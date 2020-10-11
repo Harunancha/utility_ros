@@ -143,17 +143,20 @@ void CVPlotLib::draw_ellipse(pd_u::NormalDistribution2d nd2d, double size, doubl
 {
     cv::Point mu = transform2dtoPix(nd2d.mu);
     cv::Size sigma;
-    sigma.width = (nd2d.sigma.xx + nd2d.sigma.yy + std::sqrt((nd2d.sigma.xx - nd2d.sigma.yy)*(nd2d.sigma.xx - nd2d.sigma.yy)+4*nd2d.sigma.xy*nd2d.sigma.xy)) / 2 * scale_ratio;
-    sigma.height = (nd2d.sigma.xx + nd2d.sigma.yy - std::sqrt((nd2d.sigma.xx - nd2d.sigma.yy)*(nd2d.sigma.xx - nd2d.sigma.yy)+4*nd2d.sigma.xy*nd2d.sigma.xy)) / 2 * scale_ratio;
-    double a = atan((nd2d.sigma.xx - nd2d.sigma.yy) / nd2d.sigma.xy);
-    cv::Point2d v(cos(a), sin(a));
-    cv::Point v_pix = transform2dtoPix(v);
+    sigma.width = (nd2d.sigma.xx + nd2d.sigma.yy + std::sqrt((nd2d.sigma.xx - nd2d.sigma.yy)*(nd2d.sigma.xx - nd2d.sigma.yy)+4*nd2d.sigma.xy*nd2d.sigma.xy)) / 2;
+    sigma.height = (nd2d.sigma.xx + nd2d.sigma.yy - std::sqrt((nd2d.sigma.xx - nd2d.sigma.yy)*(nd2d.sigma.xx - nd2d.sigma.yy)+4*nd2d.sigma.xy*nd2d.sigma.xy)) / 2;
+    std::cout << "u: " << sigma.width << ", v: " << sigma.height << ", xx: " << nd2d.sigma.xx << ", yy: " << nd2d.sigma.yy << std::endl;
+    double a = atan((sigma.width - nd2d.sigma.xx) / nd2d.sigma.xy);
     double a_pix;
-    std::cout << "atan2: " << RAD2DEG(atan2(v_pix.y, v_pix.x)) << std::endl;
-    a_pix = RAD2DEG(atan2(v_pix.y, v_pix.x));
+    a_pix = -RAD2DEG(a);
+    std::cout << "a[rad]: " << a << ", a_pix[DEG]: " << a_pix << std::endl;
     draw_point(nd2d.mu, size, thickness, color_mu);
     if (sigma.width > 0 && sigma.height > 0)
+    {
+        sigma.width *= scale_ratio;
+        sigma.height *= scale_ratio;
         cv::ellipse(image, mu, sigma, a_pix, a_pix, a_pix + 360., color_sigma, thickness, 8, 0);
+    }
     else
         ROS_ERROR("drawing error: ellipse sigma is smaller than 0");
 }

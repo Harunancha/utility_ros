@@ -34,27 +34,27 @@ int main(int argc, char **argv)
     // std::cout << "p3d: (" << a3d << ")" << std::endl;
 
     // pd_u  20201007    ///////////////////////////
-    // pd_u::Mu2d mu(1., 2.);
-    // // pd_u::Sigma2d sigma(1., 1., -0.6);
+    pd_u::Mu2d mu(1., 2.);
+    pd_u::Sigma2d sigma(1., 1., 0.6);
     // pd_u::Sigma2d sigma(1., 1., 0.6);
-    // pd_u::NormalDistribution2d nd2d(mu, sigma);
+    pd_u::NormalDistribution2d nd2d(mu, sigma);
     
     // CVPlotLib  20201007    ///////////////////////////
-    // CVPlotLib plt;
-    // plt.set_param(cv::Point2d(1., 2.), 4., 500, 0.5);
-    // plt.init_image();
-    // plt.draw_point(b, 0.3, 0.1, cv::Scalar(255, 0, 0));
-    // plt.draw_arrow(a, b);
-    // geo_u::Pose2d p2d(1., 3., 30.);
-    // plt.draw_pose(p2d);
-    // plt.draw_ellipse(nd2d);
-    // int count = 0;
-    // while (1)
-    // {
-    //     plt.show();
-    //     sleep(1);
-    //     count++;
-    // }
+    CVPlotLib plt;
+    plt.set_param(cv::Point2d(1., 2.), 4., 500, 0.5);
+    plt.init_image();
+    plt.draw_point(b, 0.3, 0.1, cv::Scalar(255, 0, 0));
+    plt.draw_arrow(a, b);
+    geo_u::Pose2d p2d(1., 3., 30.);
+    plt.draw_pose(p2d);
+    plt.draw_ellipse(nd2d);
+    int count = 0;
+    while (1)
+    {
+        plt.show();
+        sleep(1);
+        count++;
+    }
 
 
     return 0;
