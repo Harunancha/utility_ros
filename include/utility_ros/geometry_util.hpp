@@ -12,6 +12,7 @@ TODO:
 
 #include <tf/tf.h>
 
+
 #ifndef M_PI
 #define M_PI = 3.141592653589793238
 #endif
@@ -97,6 +98,70 @@ namespace geo_u
             cv::Point2d position = tf_point_to_p(local_p);
             return Pose2d(position, p.th - th);
         };
+    };
+
+    class BoundingBox3d
+    {
+    public:
+        std::string label;
+        std::vector<cv::Point3d> points;
+        std::vector<cv::Point3d> vertices;
+        cv::Point3d center3d;
+
+    public:
+        BoundingBox3d(){};
+        ~BoundingBox3d(){};
+        BoundingBox3d(std::vector<cv::Point3d> &ps)
+        {
+            points.clear();
+            points = ps;
+            update();
+        };
+        void update()
+        {
+            cv::Point3d min, max;
+            for (auto p : points)
+            {
+                if (p.x < min.x)
+                    min.x = p.x;
+                if (p.y < min.y)
+                    min.y = p.y;
+                if (p.z < min.z)
+                    min.z = p.z;
+                if (p.x > max.x)
+                    max.x = p.x;
+                if (p.y > max.y)
+                    max.y = p.y;
+                if (p.z > max.z)
+                    max.z = p.z;
+            }
+            center3d = (min + max) / 2;
+            vertices.clear();
+            vertices.push_back(min);
+            vertices.push_back(cv::Point3d(min.x,min.y,max.z));
+            vertices.push_back(cv::Point3d(max.x,min.y,max.z));
+            vertices.push_back(cv::Point3d(max.x,min.y,min.z));
+            vertices.push_back(cv::Point3d(min.x,max.y,min.z));
+            vertices.push_back(cv::Point3d(min.x,max.y,max.z));
+            vertices.push_back(cv::Point3d(max.x,max.y,min.z));
+            vertices.push_back(max);
+        };
+    };
+    
+    cv::Point3d tf_point3d(cv::Point3d &p3d, Transform3d &tf)
+    {
+        tf::Vector3 p(p3d.x, p3d.y, p3d.z);
+        tf::Vector3 tf_p = tf * p;
+        return cv::Point3d(tf_p.getX(), tf_p.getY(), tf_p.getZ());
+    };
+
+    void tf_bb3d(BoundingBox3d &bb3d, tf::Transform &tf)
+    {
+        for (auto p : bb3d.points)
+        {
+            p = tf_point3d(p, tf);
+        }
+        bb3d.update();
     };
 
     static double Distance2d(cv::Point2d x1, cv::Point2d x2)
