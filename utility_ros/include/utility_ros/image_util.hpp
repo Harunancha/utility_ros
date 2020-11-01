@@ -27,6 +27,13 @@ namespace im_u
 	    	return false;
     }
 
+    double IoU(cv::Rect r1, cv::Rect r2)
+    {
+        double Intersection = (r1 & r2).area();
+        double Union = r1.area() + r2.area() - Intersection;
+        return Intersection / Union;
+    }
+
 } // namespace im_u
 
 
